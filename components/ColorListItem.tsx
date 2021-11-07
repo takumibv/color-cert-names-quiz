@@ -55,7 +55,7 @@ const ColorListItem = ({
             setIsDisplayColor(!isDisplayColor);
           }}
         ></div>
-        <div className={classNames("absolute right-0 top-0 rounded-bl-md bg-white p-1", checked ? "" : "opacity-0 group-hover:opacity-100")}>
+        <div className={classNames("absolute right-0 top-0 rounded-bl-md bg-white p-1", checked ? "" : "sm:opacity-0 group-hover:opacity-100")}>
           <span className="cursor-pointer hover:opacity-80" tabIndex={0} onClick={() => { onChecked && onChecked() }}>
             {checked
               ? <Bookmark className="text-red-500" />
