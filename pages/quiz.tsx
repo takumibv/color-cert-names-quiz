@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import * as munsell from 'munsell';
-import colors from "../data/colors";
+import colors from "../static_data/colors";
 
 // 全ての選択肢
 const allChoices = colors.map(color => color.code);
