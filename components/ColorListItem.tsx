@@ -11,7 +11,7 @@ interface ColorListItemProps extends HTMLAttributes<HTMLDivElement> {
   isHideColor?: boolean;
 }
 
-export default ({
+const ColorListItem = ({
   id,
   name,
   yomi,
@@ -51,3 +51,5 @@ export default ({
     </div>
   )
 };
+
+export default ColorListItem;

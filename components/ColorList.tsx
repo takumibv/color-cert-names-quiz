@@ -8,7 +8,7 @@ import FilterButton from "./FilterButton";
 // 全ての選択肢
 const allChoices = colors.map(color => color.code);
 
-export default () => {
+const ColorList = () => {
   const [isHideColor, setIsHideColor] = useState(false);
   const [isRandom, setIsRandom] = useState(false);
   const [isOnlyCheck, setIsOnlyCheck] = useState(false);
@@ -51,3 +51,5 @@ export default () => {
     </>
   )
 };
+
+export default ColorList;

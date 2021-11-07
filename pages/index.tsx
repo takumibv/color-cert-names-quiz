@@ -10,7 +10,7 @@ import ColorList from '../components/ColorList';
 // 全ての選択肢
 const allChoices = colors.map(color => color.code);
 
-export default () => {
+const Index = () => {
   return (
     <div className="">
       <Head>
@@ -33,3 +33,5 @@ export default () => {
     </div>
   )
 }
+
+export default Index;

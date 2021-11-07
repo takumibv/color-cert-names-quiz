@@ -5,7 +5,7 @@ interface FilterButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
 }
 
-export default ({ children, active = false, className, ...props }: FilterButtonProps) => {
+const FilterButton = ({ children, active = false, className, ...props }: FilterButtonProps) => {
   return (
     <button className={classNames(
       "border-2 border-transparent rounded-full  py-2 px-4",
@@ -17,3 +17,5 @@ export default ({ children, active = false, className, ...props }: FilterButtonP
     </button>
   )
 };
+
+export default FilterButton;

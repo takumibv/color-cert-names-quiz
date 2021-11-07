@@ -9,7 +9,7 @@ import colors from "../data/colors";
 // 全ての選択肢
 const allChoices = colors.map(color => color.code);
 
-export default () => {
+const Quiz = () => {
   return (
     <div className="">
       <Head>
@@ -36,3 +36,5 @@ export default () => {
     </div>
   )
 }
+
+export default Quiz;
