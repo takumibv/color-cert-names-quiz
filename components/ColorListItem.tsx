@@ -13,6 +13,7 @@ interface ColorListItemProps extends HTMLAttributes<HTMLDivElement> {
   code: string;
   explain: string;
   isHideColor?: boolean;
+  isHideName?: boolean;
   checked?: boolean;
   onChecked?: () => void;
 }
@@ -24,6 +25,7 @@ const ColorListItem = ({
   code,
   explain,
   isHideColor = false,
+  isHideName = false,
   checked = false,
   children,
   className,
@@ -63,7 +65,7 @@ const ColorListItem = ({
       </div>
 
       <div className="flow-root mb-1">
-        <p className="font-bold inline-block mr-2">{name}{yomi !== "" && `(${yomi})`}</p>
+        <p className={classNames("font-bold inline-block mr-2", isHideName && "opacity-0")}>{name}{yomi !== "" && `(${yomi})`}</p>
         <p className={classNames("float-right", !isDisplayColor && "opacity-0")}>{munsell.hexToMunsell(code)}</p>
       </div>
       <p className={classNames("text-gray-400", !isDisplayColor && "opacity-0")}>{explain}</p>

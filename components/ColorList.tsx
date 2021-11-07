@@ -10,10 +10,19 @@ import FilterButton from "./FilterButton";
 const allChoices = colors.map(color => color.code);
 
 const ColorList = () => {
+  // 「色を隠す」フィルター
   const [isHideColor, setIsHideColor] = useState(false);
+  // 「名前を隠す」フィルター
+  const [isHideName, setIsHideName] = useState(false);
+  // 「ランダムに並べる」フィルター
   const [isRandom, setIsRandom] = useState(false);
+  // 「ブックマークのみ表示」フィルター
   const [isOnlyCheck, setIsOnlyCheck] = useState(false);
+
+  // 表示用に整列された色配列
   const [displayColors, setDisplayColors] = useState(colors);
+
+  // 各色の達成情報
   const [colorAchieves, setColorAchieves] = useColorAchieves();
 
   useEffect(() => {
@@ -24,16 +33,15 @@ const ColorList = () => {
     }
   }, [isRandom]);
 
-  console.log("colorAchieves===", colorAchieves[1], colorAchieves["1"]);
-
   return (
     <div className="py-6 px-4 bg-white rounded-2xl">
       <h2 className="text-xl text-gray-800 text-center font-bold mb-4">色名一覧</h2>
 
-      <div className="my-6">
-        <FilterButton className="mr-2" active={isHideColor} onClick={() => setIsHideColor(!isHideColor)}>色を隠す</FilterButton>
-        <FilterButton className="mr-2" active={isRandom} onClick={() => setIsRandom(!isRandom)}>ランダムに並べる</FilterButton>
-        <FilterButton className="mr-2" active={isOnlyCheck} onClick={() => setIsOnlyCheck(!isOnlyCheck)}>ブックマークのみ表示する</FilterButton>
+      <div className="mb-8">
+        <FilterButton className="mr-2 mb-1" active={isRandom} onClick={() => setIsRandom(!isRandom)}>ランダムに並べる</FilterButton>
+        <FilterButton className="mr-2 mb-1" active={isHideColor} onClick={() => setIsHideColor(!isHideColor)}>色を隠す</FilterButton>
+        <FilterButton className="mr-2 mb-1" active={isHideName} onClick={() => setIsHideName(!isHideName)}>名前を隠す</FilterButton>
+        <FilterButton className="mr-2 mb-1" active={isOnlyCheck} onClick={() => setIsOnlyCheck(!isOnlyCheck)}>ブックマークのみ表示する</FilterButton>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4  gap-4">
@@ -58,7 +66,8 @@ const ColorList = () => {
                 isChecked: !colorAchieve.isChecked,
               }
             })}
-            isHideColor={isHideColor} />
+            isHideColor={isHideColor}
+            isHideName={isHideName} />
         })}
       </div>
       {isOnlyCheck && !displayColors.some(c => colorAchieves[`${c.id}`].isChecked) && <div className="mt-6">
@@ -88,7 +97,8 @@ const ColorList = () => {
                   isChecked: !colorAchieve.isChecked,
                 }
               })}
-              isHideColor={isHideColor} />
+              isHideColor={isHideColor}
+              isHideName={isHideName} />
           })}
         </div>
       </div>}

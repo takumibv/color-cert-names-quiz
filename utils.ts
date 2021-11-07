@@ -18,6 +18,11 @@ export function getShuffledArr(arr: any[]) {
 }
 
 const COLOR_ARCHIEVE_COOKIE_NAME = "color-achieves";
+
+/**
+ * 色の達成情報
+ * ブックマーク、総出題数、正解数
+ */
 export type ColorAchieveType = {
   isChecked?: boolean;
   total?: number;
@@ -67,7 +72,10 @@ const deserializeColorData = (serializedData: { [key: string]: [number, number, 
     return result;
   }, {} as ColorAchieveMapType);
 
-
+/**
+ * 色の達成情報の使用
+ * @returns 
+ */
 export function useColorAchieves(): [ColorAchieveMapType, (newColorAchieve: ColorAchieveMapType) => void] {
   const [cookies, setCookie, removeCookie] = useCookies([COLOR_ARCHIEVE_COOKIE_NAME]);
   let defaultColorAchieves: ColorAchieveMapType = initialColorData;
