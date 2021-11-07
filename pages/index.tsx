@@ -17,7 +17,7 @@ const Home: NextPage = () => {
         <h1 className="text-2xl text-gray-800 text-center font-bold">色彩慣用句クイズ</h1>
 
         {colors.map(color => (
-          <div className="mb-2">
+          <div key={`color-${color.code}`} className="mb-2">
             {color.name}{color.yomi !== "" && `(${color.yomi})`}
             <div className="inline-block align-middle mx-2 h-4 w-4" style={{ background: color.code }}></div>
             <span className="text-gray-400">{color.explain}</span>
