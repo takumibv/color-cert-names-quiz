@@ -1,6 +1,7 @@
 {
   "name": "color-name-quiz",
   "private": true,
+  "homepage": "https://takumibv.github.io/color-cert-names-quiz",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
