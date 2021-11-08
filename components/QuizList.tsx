@@ -7,6 +7,7 @@ import ColorListItem from './ColorListItem';
 import FilterButton from "./FilterButton";
 import QuizItem from './QuizItem';
 import colors from "../static_data/colors";
+import Link from 'next/link';
 
 const allColorIds = colors.map(color => color.id);
 
@@ -16,7 +17,8 @@ const QuizList = () => {
   // 各色の達成情報
   const [colorAchieves, setColorAchieves, isSetCookie] = useColorAchieves();
 
-  const quizIds = useMemo(() => getShuffledArr(allColorIds), []);
+  const displayQuizIds = useMemo(() =>
+    getShuffledArr(allColorIds).filter((id: number) => !isOnlyCheck || colorAchieves[id].isChecked), [isOnlyCheck]);
 
   return (
     <div className="py-6 px-4 lg:px-8 bg-white rounded-2xl">
@@ -26,10 +28,13 @@ const QuizList = () => {
 
       <h2 className="text-xl text-gray-800 text-center font-bold mb-4">正しい色を選択してください。</h2>
 
-      {quizIds.map((quizId: number) => {
-        if (isOnlyCheck && !colorAchieves[quizId].isChecked) return;
-
-        return <QuizItem key={quizId} quizId={quizId} className="mb-8" />
+      {isSetCookie && displayQuizIds.map((quizId: number) => {
+        return <QuizItem
+          key={quizId}
+          quizId={quizId}
+          colorAchieves={colorAchieves}
+          setColorAchieves={setColorAchieves}
+          className="mb-8" />
       })}
 
     </div>

@@ -3,7 +3,7 @@ import * as munsell from 'munsell';
 import classNames from 'classnames';
 import Check from '@material-ui/icons/Check';
 import Clear from '@material-ui/icons/Clear';
-import { getShuffledArr, useColorAchieves } from '../utils';
+import { ColorAchieveMapType, getShuffledArr, useColorAchieves } from '../utils';
 import colors from "../static_data/colors";
 import ColorListItem from './ColorListItem';
 
@@ -15,6 +15,8 @@ interface QuizItemProps extends HTMLAttributes<HTMLDivElement> {
   isHard?: boolean;
   onCorrect?: () => void;
   onIncorrect?: () => void;
+  colorAchieves: ColorAchieveMapType;
+  setColorAchieves: (newColorAchieve: ColorAchieveMapType) => void
 }
 
 const QuizItem = ({
@@ -22,16 +24,17 @@ const QuizItem = ({
   isHard = false,
   children,
   className,
+  colorAchieves,
+  setColorAchieves,
   ...props
 }: QuizItemProps) => {
   const [isOpenCorrect, setIsOpenCorrect] = useState(false);
 
   // 各色の達成情報
-  const [colorAchieves, setColorAchieves, isSetCookie] = useColorAchieves();
   const targetColor = colors.find(c => c.id === quizId);
   const choiceIds = useMemo(() => getShuffledArr(Array.from(new Set([quizId, ...getShuffledArr(allChoices).slice(0, 4)])).slice(0, 4)), []);
 
-  if (!targetColor || !isSetCookie) return null;
+  if (!targetColor) return null;
 
   return (
     <div className={classNames("relative", className)} {...props}>
