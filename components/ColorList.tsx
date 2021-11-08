@@ -11,9 +11,20 @@ const allChoices = colors.map(color => color.code);
 
 const ColorList = () => {
   // 「色を隠す」フィルター
-  const [isHideColor, setIsHideColor] = useState(false);
+  const [isHideColor, _setIsHideColor] = useState(false);
   // 「名前を隠す」フィルター
-  const [isHideName, setIsHideName] = useState(false);
+  const [isHideName, _setIsHideName] = useState(false);
+
+  const setIsHideColor = (newValue: boolean) => {
+    _setIsHideColor(newValue);
+    if (isHideName) _setIsHideName(false);
+  };
+
+  const setIsHideName = (newValue: boolean) => {
+    _setIsHideName(newValue);
+    if (isHideColor) _setIsHideColor(false);
+  };
+
   // 「ランダムに並べる」フィルター
   const [isRandom, setIsRandom] = useState(false);
   // 「ブックマークのみ表示」フィルター
@@ -59,6 +70,8 @@ const ColorList = () => {
             code={color.code}
             explain={color.explain}
             checked={colorAchieve.isChecked}
+            pass={colorAchieve.pass}
+            total={colorAchieve.total}
             onChecked={() => setColorAchieves({
               ...colorAchieves,
               [`${color.id}`]: {

@@ -1,3 +1,4 @@
+// 2級のカラーデータ
 export default [
   { id: 1, name: '鴇色', yomi: 'ときいろ', explain: '明るい紫みの赤', code: '#f4b3c2' },
   { id: 2, name: '韓紅色', yomi: 'からくれないいろ', explain: 'あざやかな赤', code: '#e95464' },
