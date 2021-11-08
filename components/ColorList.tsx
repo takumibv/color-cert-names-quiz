@@ -23,7 +23,7 @@ const ColorList = () => {
   const [displayColors, setDisplayColors] = useState(colors);
 
   // 各色の達成情報
-  const [colorAchieves, setColorAchieves] = useColorAchieves();
+  const [colorAchieves, setColorAchieves, isSetCookie] = useColorAchieves();
 
   useEffect(() => {
     if (isRandom) {

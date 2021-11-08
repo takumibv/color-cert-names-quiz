@@ -45,7 +45,7 @@ const ColorListItem = ({
       <div className="group">
         <div
           className={classNames(
-            "align-middle h-24 mb-2",
+            "align-middle h-24 rounded-lg mb-2",
             !isDisplayColor && "border",
             isHideColor && "cursor-pointer hover:opacity-90",
           )}

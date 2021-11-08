@@ -76,10 +76,10 @@ const deserializeColorData = (serializedData: { [key: string]: [number, number, 
  * 色の達成情報の使用
  * @returns 
  */
-export function useColorAchieves(): [ColorAchieveMapType, (newColorAchieve: ColorAchieveMapType) => void] {
+export function useColorAchieves(): [ColorAchieveMapType, (newColorAchieve: ColorAchieveMapType) => void, boolean] {
   const [cookies, setCookie, removeCookie] = useCookies([COLOR_ARCHIEVE_COOKIE_NAME]);
-  let defaultColorAchieves: ColorAchieveMapType = initialColorData;
-  const [_colorAchieves, _setColorAchieves] = useState(defaultColorAchieves);
+  const [_colorAchieves, _setColorAchieves] = useState(initialColorData);
+  const [_isSetCookie, _setIsSetCookie] = useState(false);
 
   const setColorAchieves = (newColorAchieve: ColorAchieveMapType) => {
     _setColorAchieves(newColorAchieve);
@@ -87,16 +87,19 @@ export function useColorAchieves(): [ColorAchieveMapType, (newColorAchieve: Colo
   }
 
   useEffect(() => {
+    let storedColorAchieves: ColorAchieveMapType;
     try {
-      defaultColorAchieves = cookies[COLOR_ARCHIEVE_COOKIE_NAME]
+      storedColorAchieves = cookies[COLOR_ARCHIEVE_COOKIE_NAME]
         ? deserializeColorData(cookies[COLOR_ARCHIEVE_COOKIE_NAME])
         : initialColorData;
     } catch (e) {
       removeCookie(COLOR_ARCHIEVE_COOKIE_NAME);
-      defaultColorAchieves = initialColorData;
+      storedColorAchieves = initialColorData;
     }
-    setColorAchieves(defaultColorAchieves);
-  }, []);
+    setColorAchieves(storedColorAchieves);
+    _setIsSetCookie(true);
+  }, [])
 
-  return [_colorAchieves, setColorAchieves];
+  return [_colorAchieves, setColorAchieves, _isSetCookie];
 }
+
