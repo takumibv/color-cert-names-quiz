@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import colors from "../../static_data/colors";
 import { initialColorData, useColorAchieves } from '../hooks/color_achieves';
+import { useColorData } from '../hooks/color_data';
 import { getShuffledArr } from '../utils';
 import ColorListItem from './ColorListItem';
 import FilterButton from "./FilterButton";
+import * as gtag from "../lib/gtag";
 
-const ColorList = () => {
+const ColorList = ({ level = 2 }) => {
   // 「色を隠す」フィルター
   const [isHideColor, _setIsHideColor] = useState(false);
   // 「名前を隠す」フィルター
   const [isHideName, _setIsHideName] = useState(false);
+
+  const [colorDataList] = useColorData(level);
 
   const setIsHideColor = (newValue: boolean) => {
     _setIsHideColor(newValue);
@@ -27,16 +30,16 @@ const ColorList = () => {
   const [isOnlyCheck, setIsOnlyCheck] = useState(false);
 
   // 表示用に整列された色配列
-  const [displayColors, setDisplayColors] = useState(colors);
+  const [displayColors, setDisplayColors] = useState(colorDataList);
 
   // 各色の達成情報
-  const [colorAchieves, setColorAchieves, isSetCookie] = useColorAchieves();
+  const [colorAchieves, setColorAchieves, isSetCookie] = useColorAchieves(level);
 
   useEffect(() => {
     if (isRandom) {
-      setDisplayColors(getShuffledArr(colors));
+      setDisplayColors(getShuffledArr(colorDataList));
     } else {
-      setDisplayColors(colors);
+      setDisplayColors(colorDataList);
     }
   }, [isRandom]);
 
@@ -45,10 +48,30 @@ const ColorList = () => {
       <h2 className="text-xl text-gray-800 text-center font-bold mb-4">色名一覧</h2>
 
       <div className="mb-8">
-        <FilterButton className="mr-2 mb-1" active={isRandom} onClick={() => setIsRandom(!isRandom)}>ランダムに並べる</FilterButton>
-        <FilterButton className="mr-2 mb-1" active={isHideColor} onClick={() => setIsHideColor(!isHideColor)}>色を隠す</FilterButton>
-        <FilterButton className="mr-2 mb-1" active={isHideName} onClick={() => setIsHideName(!isHideName)}>名前を隠す</FilterButton>
-        <FilterButton className="mr-2 mb-1" active={isOnlyCheck} onClick={() => setIsOnlyCheck(!isOnlyCheck)}>ブックマークのみ表示する</FilterButton>
+        <FilterButton className="mr-2 mb-1" active={isRandom} onClick={() => {
+          setIsRandom(!isRandom)
+          gtag.event({ action: "click", category: "filter", label: "list/random", value: isRandom ? "0" : "1" })
+        }}>
+          ランダムに並べる
+        </FilterButton>
+        <FilterButton className="mr-2 mb-1" active={isHideColor} onClick={() => {
+          setIsHideColor(!isHideColor)
+          gtag.event({ action: "click", category: "filter", label: "list/hide_color", value: isHideColor ? "0" : "1" })
+        }}>
+          色を隠す
+        </FilterButton>
+        <FilterButton className="mr-2 mb-1" active={isHideName} onClick={() => {
+          setIsHideName(!isHideName)
+          gtag.event({ action: "click", category: "filter", label: "list/hide_name", value: isHideName ? "0" : "1" })
+        }}>
+          名前を隠す
+        </FilterButton>
+        <FilterButton className="mr-2 mb-1" active={isOnlyCheck} onClick={() => {
+          setIsOnlyCheck(!isOnlyCheck)
+          gtag.event({ action: "click", category: "filter", label: "list/bookmark", value: isOnlyCheck ? "0" : "1" })
+        }}>
+          ブックマークのみ表示する
+        </FilterButton>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

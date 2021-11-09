@@ -3,6 +3,7 @@ import Bookmark from '@material-ui/icons/Bookmark';
 import BookmarkBorder from '@material-ui/icons/BookmarkBorder';
 import classNames from 'classnames';
 import * as munsell from 'munsell';
+import * as gtag from "../lib/gtag";
 
 interface ColorListItemProps extends HTMLAttributes<HTMLDivElement> {
   id: string;
@@ -65,7 +66,10 @@ const ColorListItem = ({
           }}
         ></div>
         <div className={classNames("absolute right-0 top-0 rounded-bl-md rounded-tr-lg bg-white p-1", checked ? "" : "sm:opacity-0 group-hover:opacity-100")}>
-          <span className="cursor-pointer hover:opacity-80" tabIndex={0} onClick={() => { onChecked && onChecked() }}>
+          <span className="cursor-pointer hover:opacity-80" tabIndex={0} onClick={() => {
+            onChecked && onChecked()
+            gtag.event({ action: "click", category: "bookmark", label: code, value: checked ? "0" : "1" })
+          }}>
             {checked
               ? <Bookmark className="text-red-500" />
               : <BookmarkBorder />}

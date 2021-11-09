@@ -3,17 +3,17 @@ import * as munsell from 'munsell';
 import classNames from 'classnames';
 import Check from '@material-ui/icons/Check';
 import Clear from '@material-ui/icons/Clear';
-import { ColorAchieveMapType, useColorAchieves } from '../hooks/color_achieves';
-import colors from "../../static_data/colors";
+import { ColorAchieveMapType } from '../hooks/color_achieves';
 import ColorListItem from './ColorListItem';
 import { getShuffledArr } from '../utils';
-
-// 全ての選択肢
-const allChoices = colors.map(color => color.id);
+import { useColorData } from '../hooks/color_data';
+import * as gtag from '../lib/gtag';
 
 interface QuizItemProps extends HTMLAttributes<HTMLDivElement> {
+  level?: number;
   quizId: number;
   index: number;
+  refreshCount?: number;
   isHard?: boolean;
   onCorrect?: () => void;
   onIncorrect?: () => void;
@@ -22,8 +22,10 @@ interface QuizItemProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const QuizItem = ({
+  level = 2,
   quizId,
   index,
+  refreshCount = 0,
   isHard = false,
   children,
   className,
@@ -37,13 +39,19 @@ const QuizItem = ({
   const [choiceId, setChoiceId] = useState<number | boolean>(false);
   const [isCorrect, setIsCorrect] = useState(false);
 
+  const [colorDataList, getNormalChoiceIds, getHardChoiceIds] = useColorData(level);
+
   useEffect(() => {
     setIsCorrect(quizId === choiceId);
   }, [choiceId]);
 
+  useEffect(() => {
+    setIsOpenCorrect(false);
+  }, [isHard, index, refreshCount, quizId]);
+
   // 各色の達成情報
-  const targetColor = colors.find(c => c.id === quizId);
-  const choiceIds = useMemo(() => getShuffledArr(Array.from(new Set([quizId, ...getShuffledArr(allChoices).slice(0, 4)])).slice(0, 4)), []);
+  const targetColor = colorDataList.find(c => c.id === quizId);
+  const choiceIds = useMemo(() => isHard ? getHardChoiceIds(quizId) : getNormalChoiceIds(quizId), [isHard, refreshCount]);
 
   if (!targetColor) return null;
 
@@ -60,7 +68,7 @@ const QuizItem = ({
       </h3>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {choiceIds.map((id: number) => {
-          const color = colors.find(c => c.id === id);
+          const color = colorDataList.find(c => c.id === id);
 
           if (!color) return null;
 
@@ -106,6 +114,8 @@ const QuizItem = ({
                 onClick={() => {
                   setIsOpenCorrect(true);
                   setChoiceId(id);
+
+                  gtag.event({ action: "click", category: "answer", label: targetColor.code, value: color.code })
 
                   if (quizId === id) {
                     onCorrect && onCorrect();

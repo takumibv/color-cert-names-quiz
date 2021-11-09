@@ -8,25 +8,25 @@ import Footer from '../components/Footer';
 const Quiz = () => {
   return (
     <CookiesProvider>
-      <div className="bg-red-50 min-h-screen">
+      <div className="bg-blue-50 min-h-screen">
         <Head>
-          <title>クイズ - 色彩検定2級 慣用色名クイズ</title>
+          <title>クイズ - 色彩検定3級 慣用色名クイズ</title>
         </Head>
 
         <div className="container mx-auto py-10 px-4">
           <p className="mb-4">
-            <Link href="/list_2">
+            <Link href="/list_3">
               <a>
                 <KeyboardArrowLeftRounded className="align-middle" />
                 <span className="align-middle">もどる</span>
               </a>
             </Link>
           </p>
-          <h1 className="text-2xl text-gray-800 text-center font-bold mb-10">色彩検定2級 慣用色名クイズ</h1>
+          <h1 className="text-2xl text-gray-800 text-center font-bold mb-10">色彩検定3級 慣用色名クイズ</h1>
 
           {/* 色を４択選んで正解不正解を出す */}
           {/* フィルター: 「ブックマーク」「高難易度」 */}
-          <QuizList />
+          <QuizList level={3} />
 
         </div>
 

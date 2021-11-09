@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import colors from "../../static_data/colors";
 
-const COLOR_ARCHIEVE_COOKIE_NAME = "color-achieves";
+const COLOR_ARCHIEVE_COOKIE_NAME_2 = "color-achieves";
+const COLOR_ARCHIEVE_COOKIE_NAME_3 = "color-achieves-3";
 
 /**
  * 色の達成情報
@@ -61,24 +62,25 @@ const deserializeColorData = (serializedData: { [key: string]: [number, number, 
  * 色の達成情報の使用
  * @returns 
  */
-export function useColorAchieves(): [ColorAchieveMapType, (newColorAchieve: ColorAchieveMapType) => void, boolean] {
-  const [cookies, setCookie, removeCookie] = useCookies([COLOR_ARCHIEVE_COOKIE_NAME]);
+export function useColorAchieves(level: number = 2): [ColorAchieveMapType, (newColorAchieve: ColorAchieveMapType) => void, boolean] {
+  const cookieName = level === 2 ? COLOR_ARCHIEVE_COOKIE_NAME_2 : COLOR_ARCHIEVE_COOKIE_NAME_3;
+  const [cookies, setCookie, removeCookie] = useCookies([cookieName]);
   const [_colorAchieves, _setColorAchieves] = useState(initialColorData);
   const [_isSetCookie, _setIsSetCookie] = useState(false);
 
   const setColorAchieves = (newColorAchieve: ColorAchieveMapType) => {
     _setColorAchieves(newColorAchieve);
-    setCookie(COLOR_ARCHIEVE_COOKIE_NAME, serializeColorData(newColorAchieve), { path: '/', maxAge: 60 * 60 * 24 * 365 * 3 });
+    setCookie(cookieName, serializeColorData(newColorAchieve), { path: '/', maxAge: 60 * 60 * 24 * 365 * 3 });
   }
 
   useEffect(() => {
     let storedColorAchieves: ColorAchieveMapType;
     try {
-      storedColorAchieves = cookies[COLOR_ARCHIEVE_COOKIE_NAME]
-        ? deserializeColorData(cookies[COLOR_ARCHIEVE_COOKIE_NAME])
+      storedColorAchieves = cookies[cookieName]
+        ? deserializeColorData(cookies[cookieName])
         : initialColorData;
     } catch (e) {
-      removeCookie(COLOR_ARCHIEVE_COOKIE_NAME);
+      removeCookie(cookieName);
       storedColorAchieves = initialColorData;
     }
     setColorAchieves(storedColorAchieves);
