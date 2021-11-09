@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import colors from "../static_data/colors";
-import { getShuffledArr, initialColorData, useColorAchieves } from '../utils';
+import colors from "../../static_data/colors";
+import { initialColorData, useColorAchieves } from '../hooks/color_achieves';
+import { getShuffledArr } from '../utils';
 import ColorListItem from './ColorListItem';
 import FilterButton from "./FilterButton";
 

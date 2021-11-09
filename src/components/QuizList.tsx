@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import { getShuffledArr, useColorAchieves } from '../utils';
+import { useColorAchieves } from '../hooks/color_achieves';
 import FilterButton from "./FilterButton";
 import QuizItem from './QuizItem';
-import colors from "../static_data/colors";
+import colors from "../../static_data/colors";
+import { getShuffledArr } from '../utils';
 
 const allColorIds = colors.map(color => color.id);
 

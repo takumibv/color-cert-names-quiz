@@ -3,9 +3,10 @@ import * as munsell from 'munsell';
 import classNames from 'classnames';
 import Check from '@material-ui/icons/Check';
 import Clear from '@material-ui/icons/Clear';
-import { ColorAchieveMapType, getShuffledArr, useColorAchieves } from '../utils';
-import colors from "../static_data/colors";
+import { ColorAchieveMapType, useColorAchieves } from '../hooks/color_achieves';
+import colors from "../../static_data/colors";
 import ColorListItem from './ColorListItem';
+import { getShuffledArr } from '../utils';
 
 // 全ての選択肢
 const allChoices = colors.map(color => color.id);
