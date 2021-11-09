@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Head from 'next/head'
-import { Cookies, CookiesProvider } from "react-cookie";
+import { CookiesProvider } from "react-cookie";
 import KeyboardArrowLeftRounded from '@material-ui/icons/KeyboardArrowLeftRounded';
 import QuizList from '../components/QuizList';
 import Footer from '../components/Footer';
@@ -25,6 +25,7 @@ const Quiz = () => {
           <h1 className="text-2xl text-gray-800 text-center font-bold mb-10">色彩検定2級 慣用色名クイズ</h1>
 
           {/* 色を４択選んで正解不正解を出す */}
+          {/* フィルター: 「ブックマーク」「高難易度」 */}
           <QuizList />
 
         </div>

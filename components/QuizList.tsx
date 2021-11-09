@@ -1,20 +1,18 @@
-import * as munsell from 'munsell';
-import React, { useEffect, useMemo, useState } from 'react';
-import { useCookies } from 'react-cookie';
-import FilterList from '@material-ui/icons/FilterList';
+import React, { useMemo, useState } from 'react';
 import { getShuffledArr, useColorAchieves } from '../utils';
-import ColorListItem from './ColorListItem';
 import FilterButton from "./FilterButton";
 import QuizItem from './QuizItem';
 import colors from "../static_data/colors";
-import Link from 'next/link';
-import { isWidthDown } from '@material-ui/core';
 
 const allColorIds = colors.map(color => color.id);
 
 const QuizList = () => {
   // 「ブックマークのみ表示」フィルター
   const [isOnlyCheck, setIsOnlyCheck] = useState(false);
+  // 正解数
+  const [correctCount, setCorrectCount] = useState(0);
+  // 回答数
+  const [answerCount, setAnswerCount] = useState(0);
   // 各色の達成情報
   const [colorAchieves, setColorAchieves, isSetCookie] = useColorAchieves();
 
@@ -36,12 +34,27 @@ const QuizList = () => {
           index={index + 1}
           colorAchieves={colorAchieves}
           setColorAchieves={setColorAchieves}
+          onCorrect={() => {
+            setAnswerCount(answerCount + 1);
+            setCorrectCount(correctCount + 1);
+          }}
+          onIncorrect={() => { setAnswerCount(answerCount + 1); }}
           className="mb-8" />
       })}
 
-      {displayQuizIds.length === 0 && <div className="">
-        <p className="text-center text-gray-400 mb-4">ブックマークはありません。</p>
+      {displayQuizIds.length === 0 && <div className="mb-4">
+        <p className="text-center text-gray-400">ブックマークはありません。</p>
       </div>}
+
+      {displayQuizIds.length !== 0 && displayQuizIds.length === answerCount &&
+        <div className="my-8">
+          <p className="text-center text-gray-600">
+            <span className="inline-block text-xl mr-2">正解数</span>
+            <span className="text-4xl">{correctCount}</span>
+            <span className="inline-block text-xl mx-2">/</span>
+            <span className="text-3xl">{answerCount}</span>
+          </p>
+        </div>}
 
       {displayQuizIds.length !== 0 && <div className="text-center my-8">
         <button

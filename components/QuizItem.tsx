@@ -26,6 +26,8 @@ const QuizItem = ({
   isHard = false,
   children,
   className,
+  onCorrect,
+  onIncorrect,
   colorAchieves,
   setColorAchieves,
   ...props
@@ -75,7 +77,7 @@ const QuizItem = ({
                   name={color.name}
                   yomi={color.yomi}
                   code={color.code}
-                  explain={color.explain}
+                  explain={""}
                   checked={colorAchieve.isChecked}
                   pass={colorAchieve.pass}
                   total={colorAchieve.total}
@@ -103,6 +105,12 @@ const QuizItem = ({
                 onClick={() => {
                   setIsOpenCorrect(true);
                   setChoiceId(id);
+
+                  if (quizId === id) {
+                    onCorrect && onCorrect();
+                  } else {
+                    onIncorrect && onIncorrect();
+                  }
 
                   const targetColorAchieve = colorAchieves[quizId];
                   if (!targetColorAchieve) return;

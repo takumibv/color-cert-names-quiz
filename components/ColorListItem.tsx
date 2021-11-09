@@ -54,7 +54,7 @@ const ColorListItem = ({
       <div className="group">
         <div
           className={classNames(
-            "align-middle h-24 rounded-lg mb-2",
+            "align-middle h-20 rounded-lg mb-2",
             !isDisplayColor && "border",
             (isHideColor || isHideName) && "cursor-pointer hover:opacity-90",
           )}
@@ -64,7 +64,7 @@ const ColorListItem = ({
             if (isHideName) setIsDisplayName(!isDisplayName);
           }}
         ></div>
-        <div className={classNames("absolute right-0 top-0 rounded-bl-md bg-white p-1", checked ? "" : "sm:opacity-0 group-hover:opacity-100")}>
+        <div className={classNames("absolute right-0 top-0 rounded-bl-md rounded-tr-lg bg-white p-1", checked ? "" : "sm:opacity-0 group-hover:opacity-100")}>
           <span className="cursor-pointer hover:opacity-80" tabIndex={0} onClick={() => { onChecked && onChecked() }}>
             {checked
               ? <Bookmark className="text-red-500" />

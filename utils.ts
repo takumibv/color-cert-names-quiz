@@ -32,7 +32,7 @@ export type ColorAchieveMapType = {
   [key: string]: ColorAchieveType
 }
 
-const initialColorData: ColorAchieveMapType = colors.reduce((result, current, index) => {
+export const initialColorData: ColorAchieveMapType = colors.reduce((result, current, index) => {
   result[current.id] = {
     isChecked: false,
     total: 0,
@@ -83,7 +83,7 @@ export function useColorAchieves(): [ColorAchieveMapType, (newColorAchieve: Colo
 
   const setColorAchieves = (newColorAchieve: ColorAchieveMapType) => {
     _setColorAchieves(newColorAchieve);
-    setCookie(COLOR_ARCHIEVE_COOKIE_NAME, serializeColorData(newColorAchieve), { path: '/', maxAge: 30 * 60 * 24 });
+    setCookie(COLOR_ARCHIEVE_COOKIE_NAME, serializeColorData(newColorAchieve), { path: '/', maxAge: 60 * 60 * 24 * 365 * 3 });
   }
 
   useEffect(() => {

@@ -1,12 +1,8 @@
 import Link from 'next/link';
 import Head from 'next/head'
 import { CookiesProvider } from "react-cookie";
-import colors from "../static_data/colors";
 import ColorList from '../components/ColorList';
 import Footer from '../components/Footer';
-
-// 全ての選択肢
-const allChoices = colors.map(color => color.code);
 
 const Index = () => {
   return (
@@ -27,6 +23,7 @@ const Index = () => {
             </Link>
           </div>
 
+          {/* フィルター: 「ランダムに並べる」「色・名前を隠す」「ブックマーク」「正答率が低い順」 */}
           <ColorList />
         </div>
 
