@@ -16,13 +16,13 @@ const Index = () => {
           <h1 className="text-3xl text-gray-800 text-center font-bold mb-16">色彩検定 慣用色名クイズ</h1>
 
           <div className="text-center mt-8 mb-8">
-            <Link href="/list_3">
+            <Link href="/list_3" passHref>
               <button className="bg-blue-500 hover:bg-blue-700 cursor-pointer text-white text-lg rounded-md py-3 px-8 mx-4 mb-2">
                 3級
               </button>
             </Link>
 
-            <Link href="/list_2">
+            <Link href="/list_2" passHref>
               <button className="bg-blue-500 hover:bg-blue-700 cursor-pointer text-white text-lg rounded-md py-3 px-8 mx-4 mb-2">
                 2級
               </button>

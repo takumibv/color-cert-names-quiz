@@ -15,7 +15,7 @@ const Index = () => {
 
         <div className="container mx-auto py-10 px-4">
           <p className="mb-4">
-            <Link href="/">
+            <Link href="/" passHref>
               <a>
                 <KeyboardArrowLeftRounded className="align-middle" />
                 <span className="align-middle">TOPへ</span>
@@ -25,7 +25,7 @@ const Index = () => {
           <h1 className="text-2xl text-gray-800 text-center font-bold mb-10">2級に出てくる慣用色名</h1>
 
           <div className="text-center mt-8 mb-16">
-            <Link href="/quiz">
+            <Link href="/quiz" passHref>
               <button className="bg-blue-500 hover:bg-blue-700 cursor-pointer text-white rounded-md py-2 px-4">
                 クイズを始める
               </button>
