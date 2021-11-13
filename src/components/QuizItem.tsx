@@ -1,8 +1,8 @@
 import React, { HTMLAttributes, useEffect, useMemo, useState } from 'react';
 import * as munsell from 'munsell';
 import classNames from 'classnames';
-import Check from '@material-ui/icons/Check';
-import Clear from '@material-ui/icons/Clear';
+import Check from '@mui/icons-material/Check';
+import Clear from '@mui/icons-material/Clear';
 import { ColorAchieveMapType } from '../hooks/color_achieves';
 import ColorListItem from './ColorListItem';
 import { getShuffledArr } from '../utils';

@@ -8,8 +8,8 @@ interface FilterButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const FilterButton = ({ children, active = false, className, ...props }: FilterButtonProps) => {
   return (
     <button className={classNames(
-      "border-2 border-transparent rounded-full  py-2 px-4",
-      active ? "bg-blue-500 hover:bg-blue-700 text-white" : "border-gray-500 hover:bg-gray-100 text-gray-500",
+      "border-2 border-transparent rounded-full py-2 px-4",
+      active ? "bg-blue-500 hover:bg-blue-700 text-white" : "border-gray-500 bg-white hover:bg-gray-100 text-gray-500",
       !props.disabled && "cursor-pointer",
       className,
     )} {...props}>

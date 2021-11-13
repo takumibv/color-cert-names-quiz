@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { CookiesProvider } from "react-cookie";
-import KeyboardArrowLeftRounded from '@material-ui/icons/KeyboardArrowLeftRounded';
+import KeyboardArrowLeftRounded from '@mui/icons-material/KeyboardArrowLeftRounded';
 import Seo from '../components/Seo';
 import QuizList from '../components/QuizList';
 import Footer from '../components/Footer';

@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, useEffect, useState } from 'react';
-import Bookmark from '@material-ui/icons/Bookmark';
-import BookmarkBorder from '@material-ui/icons/BookmarkBorder';
+import Bookmark from '@mui/icons-material/Bookmark';
+import BookmarkBorder from '@mui/icons-material/BookmarkBorder';
 import classNames from 'classnames';
 import * as munsell from 'munsell';
 import * as gtag from "../lib/gtag";

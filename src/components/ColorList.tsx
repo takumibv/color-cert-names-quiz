@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import SortIcon from '@mui/icons-material/Sort';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { initialColorData, useColorAchieves } from '../hooks/color_achieves';
 import { ColorDataType, useColorData } from '../hooks/color_data';
 import { getShuffledArr } from '../utils';
@@ -26,22 +28,34 @@ const ColorList = ({ level = 2 }) => {
 
   // 「ランダムに並べる」フィルター
   const [isRandom, setIsRandom] = useState(false);
+
+  //「正答率が低い順に並べる」フィルター
+  const [isLowestRate, setIsLowestRate] = useState(false);
+
   // 「ブックマークのみ表示」フィルター
   const [isOnlyCheck, setIsOnlyCheck] = useState(false);
-
-  // 表示用に整列された色配列
-  const [displayColors, setDisplayColors] = useState(colorDataList);
 
   // 各色の達成情報
   const [colorAchieves, setColorAchieves, isSetCookie] = useColorAchieves(level);
 
-  useEffect(() => {
+  // 表示用に整列された色配列
+  const displayColors: ColorDataType[] = useMemo(() => {
     if (isRandom) {
-      setDisplayColors(getShuffledArr(colorDataList));
-    } else {
-      setDisplayColors(colorDataList);
+      return getShuffledArr(colorDataList)
+    } else if (isLowestRate) {
+      return [...colorDataList].sort((color_a, color_b) => {
+        // total = 0 のものは後ろに回す
+        const INF = 1000000;
+        const colorAchieve_a = colorAchieves[`${color_a.id}`];
+        const accurancy_a = colorAchieve_a.total ? (colorAchieve_a.pass || 0) / colorAchieve_a.total : INF;
+        const colorAchieve_b = colorAchieves[`${color_b.id}`];
+        const accurancy_b = colorAchieve_b.total ? (colorAchieve_b.pass || 0) / colorAchieve_b.total : INF;
+
+        return accurancy_a - accurancy_b;
+      })
     }
-  }, [isRandom]);
+    return colorDataList;
+  }, [isRandom, isLowestRate]);
 
   const renderColorListItem = (color: ColorDataType) => {
     const colorAchieve = colorAchieves[`${color.id}`];
@@ -74,31 +88,52 @@ const ColorList = ({ level = 2 }) => {
     <div className="py-6 px-4 bg-white rounded-2xl">
       <h2 className="text-xl text-gray-800 text-center font-bold mb-4">色名一覧</h2>
 
-      <div className="mb-8">
-        <FilterButton className="mr-2 mb-1" active={isRandom} onClick={() => {
-          setIsRandom(!isRandom)
-          gtag.event({ action: "click", category: "filter", label: "list/random", value: isRandom ? "0" : "1" })
-        }}>
-          ランダムに並べる
-        </FilterButton>
-        <FilterButton className="mr-2 mb-1" active={isHideColor} onClick={() => {
-          setIsHideColor(!isHideColor)
-          gtag.event({ action: "click", category: "filter", label: "list/hide_color", value: isHideColor ? "0" : "1" })
-        }}>
-          色を隠す
-        </FilterButton>
-        <FilterButton className="mr-2 mb-1" active={isHideName} onClick={() => {
-          setIsHideName(!isHideName)
-          gtag.event({ action: "click", category: "filter", label: "list/hide_name", value: isHideName ? "0" : "1" })
-        }}>
-          名前を隠す
-        </FilterButton>
-        <FilterButton className="mr-2 mb-1" active={isOnlyCheck} onClick={() => {
-          setIsOnlyCheck(!isOnlyCheck)
-          gtag.event({ action: "click", category: "filter", label: "list/bookmark", value: isOnlyCheck ? "0" : "1" })
-        }}>
-          ブックマークのみ表示する
-        </FilterButton>
+      <div className="mb-4 flex items-baseline">
+        <div className="pt-1">
+          <SortIcon className="mr-2 text-gray-400" />
+        </div>
+        <div>
+          <FilterButton className="mr-2 mb-1" active={isRandom} onClick={() => {
+            setIsRandom(!isRandom)
+            setIsLowestRate(false)
+            gtag.event({ action: "click", category: "filter", label: "list/random", value: isRandom ? "0" : "1" })
+          }}>
+            ランダムに並べる
+          </FilterButton>
+          <FilterButton className="mr-2 mb-1" active={isLowestRate} onClick={() => {
+            setIsLowestRate(!isLowestRate)
+            setIsRandom(false);
+            gtag.event({ action: "click", category: "filter", label: "list/lowest_rate", value: isLowestRate ? "0" : "1" })
+          }}>
+            正答率が低い順に並べる
+          </FilterButton>
+        </div>
+      </div>
+      <div className="mb-8 flex items-baseline">
+        <div className="pt-1">
+          <FilterAltIcon className="mr-2 text-gray-400" />
+        </div>
+
+        <div>
+          <FilterButton className="mr-2 mb-1" active={isHideColor} onClick={() => {
+            setIsHideColor(!isHideColor)
+            gtag.event({ action: "click", category: "filter", label: "list/hide_color", value: isHideColor ? "0" : "1" })
+          }}>
+            色を隠す
+          </FilterButton>
+          <FilterButton className="mr-2 mb-1" active={isHideName} onClick={() => {
+            setIsHideName(!isHideName)
+            gtag.event({ action: "click", category: "filter", label: "list/hide_name", value: isHideName ? "0" : "1" })
+          }}>
+            名前を隠す
+          </FilterButton>
+          <FilterButton className="mr-2 mb-1" active={isOnlyCheck} onClick={() => {
+            setIsOnlyCheck(!isOnlyCheck)
+            gtag.event({ action: "click", category: "filter", label: "list/bookmark", value: isOnlyCheck ? "0" : "1" })
+          }}>
+            ブックマークのみ表示する
+          </FilterButton>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -24,12 +24,15 @@ const Seo: React.FC<Props> = ({
       <meta property="og:type" content="website" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
+      <meta property="og:locale" content="ja_JP" />
       <meta property="og:image" content={`${baseUrl}/${image}`} />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+      <meta name="twitter:image" content={`${baseUrl}/${image}`} />
+      <meta name="twitter:site" content="@takumi_bv" />
+      <meta name="twitter:creator" content="@takumi_bv" />
     </Head>
   );
 };
