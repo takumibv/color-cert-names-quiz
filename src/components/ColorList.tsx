@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { initialColorData, useColorAchieves } from '../hooks/color_achieves';
-import { useColorData } from '../hooks/color_data';
+import { ColorDataType, useColorData } from '../hooks/color_data';
 import { getShuffledArr } from '../utils';
 import ColorListItem from './ColorListItem';
 import FilterButton from "./FilterButton";
@@ -43,6 +43,33 @@ const ColorList = ({ level = 2 }) => {
     }
   }, [isRandom]);
 
+  const renderColorListItem = (color: ColorDataType) => {
+    const colorAchieve = colorAchieves[`${color.id}`];
+
+    return (
+      <ColorListItem
+        key={`color-${color.code}`}
+        className="mb-4"
+        id={`${color.id}`}
+        name={color.name}
+        yomi={color.yomi}
+        code={color.code}
+        explain={color.explain}
+        checked={colorAchieve.isChecked}
+        pass={colorAchieve.pass}
+        total={colorAchieve.total}
+        onChecked={() => setColorAchieves({
+          ...colorAchieves,
+          [`${color.id}`]: {
+            ...colorAchieve,
+            isChecked: !colorAchieve.isChecked,
+          }
+        })}
+        isHideColor={isHideColor}
+        isHideName={isHideName} />
+    );
+  }
+
   return (
     <div className="py-6 px-4 bg-white rounded-2xl">
       <h2 className="text-xl text-gray-800 text-center font-bold mb-4">色名一覧</h2>
@@ -75,31 +102,11 @@ const ColorList = ({ level = 2 }) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-
         {displayColors.map(color => {
           const colorAchieve = colorAchieves[`${color.id}`];
           if (isOnlyCheck && !colorAchieve.isChecked) return null;
 
-          return <ColorListItem
-            key={`color-${color.code}`}
-            className="mb-4"
-            id={`${color.id}`}
-            name={color.name}
-            yomi={color.yomi}
-            code={color.code}
-            explain={color.explain}
-            checked={colorAchieve.isChecked}
-            pass={colorAchieve.pass}
-            total={colorAchieve.total}
-            onChecked={() => setColorAchieves({
-              ...colorAchieves,
-              [`${color.id}`]: {
-                ...colorAchieve,
-                isChecked: !colorAchieve.isChecked,
-              }
-            })}
-            isHideColor={isHideColor}
-            isHideName={isHideName} />
+          return renderColorListItem(color);
         })}
       </div>
       {isOnlyCheck && !displayColors.some(c => colorAchieves[`${c.id}`].isChecked) && <div className="mt-6">
@@ -113,24 +120,7 @@ const ColorList = ({ level = 2 }) => {
             const colorAchieve = colorAchieves[`${color.id}`];
             if (colorAchieve.isChecked) return null;
 
-            return <ColorListItem
-              key={`color-${color.code}`}
-              className="mb-4"
-              id={`${color.id}`}
-              name={color.name}
-              yomi={color.yomi}
-              code={color.code}
-              explain={color.explain}
-              checked={colorAchieve.isChecked}
-              onChecked={() => setColorAchieves({
-                ...colorAchieves,
-                [`${color.id}`]: {
-                  ...colorAchieve,
-                  isChecked: !colorAchieve.isChecked,
-                }
-              })}
-              isHideColor={isHideColor}
-              isHideName={isHideName} />
+            return renderColorListItem(color);
           })}
         </div>
       </div>}

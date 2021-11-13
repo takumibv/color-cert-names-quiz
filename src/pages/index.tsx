@@ -1,16 +1,14 @@
 import Link from 'next/link';
-import Head from 'next/head'
 import { CookiesProvider } from "react-cookie";
-import ColorList from '../components/ColorList';
+import Seo from '../components/Seo';
 import Footer from '../components/Footer';
 
-const Index = () => {
+const Index = (props: any) => {
+  console.log("props::", props);
   return (
     <CookiesProvider>
       <div className="bg-gray-50 min-h-screen">
-        <Head>
-          <title>色彩検定 慣用色名クイズ</title>
-        </Head>
+        <Seo title="色彩検定 慣用色名クイズ" description="" image="og_img.png" />
 
         <div className="container mx-auto py-10 px-4">
           <h1 className="text-3xl text-gray-800 text-center font-bold mb-16">色彩検定 慣用色名クイズ</h1>

@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import Head from 'next/head'
 import { CookiesProvider } from "react-cookie";
 import KeyboardArrowLeftRounded from '@material-ui/icons/KeyboardArrowLeftRounded';
+import Seo from '../components/Seo';
 import ColorList from '../components/ColorList';
 import Footer from '../components/Footer';
 
@@ -9,9 +9,7 @@ const Index = () => {
   return (
     <CookiesProvider>
       <div className="bg-red-50 min-h-screen">
-        <Head>
-          <title>色彩検定2級 慣用色名クイズ</title>
-        </Head>
+        <Seo title="色彩検定2級 慣用色名クイズ" description="" image="og_img.png" />
 
         <div className="container mx-auto py-10 px-4">
           <p className="mb-4">
