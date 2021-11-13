@@ -64,7 +64,7 @@ const QuizList = ({ level = 2 }) => {
             setIsHard(!isHard)
             gtag.event({ action: "click", category: "filter", label: "hard", value: isHard ? "0" : "1" })
           }}>高難易度</FilterButton>
-        </div>.
+        </div>
       </div>
       <div className="py-6 px-4 lg:px-8 bg-white rounded-2xl">
 

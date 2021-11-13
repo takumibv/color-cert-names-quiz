@@ -107,7 +107,7 @@ const QuizItem = ({
               </>
               : <div
                 className={classNames(
-                  "align-middle h-24 rounded-lg border",
+                  "align-middle h-24 rounded-lg",
                   !isOpenCorrect && "cursor-pointer hover:opacity-90",
                 )}
                 style={{ background: munsell.munsellToHex(color.munsell || "N 10/0") }}
