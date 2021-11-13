@@ -110,12 +110,12 @@ const QuizItem = ({
                   "align-middle h-24 rounded-lg border",
                   !isOpenCorrect && "cursor-pointer hover:opacity-90",
                 )}
-                style={{ background: color.code }}
+                style={{ background: munsell.munsellToHex(color.munsell || "N 10/0") }}
                 onClick={() => {
                   setIsOpenCorrect(true);
                   setChoiceId(id);
 
-                  gtag.event({ action: "click", category: "answer", label: targetColor.code, value: color.code })
+                  gtag.event({ action: "click", category: "answer", label: targetColor.munsell || "", value: color.munsell || "" })
 
                   if (quizId === id) {
                     onCorrect && onCorrect();
