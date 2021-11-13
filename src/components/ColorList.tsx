@@ -67,7 +67,7 @@ const ColorList = ({ level = 2 }) => {
         id={`${color.id}`}
         name={color.name}
         yomi={color.yomi}
-        code={color.code}
+        munsellCode={color.munsell}
         explain={color.explain}
         checked={colorAchieve.isChecked}
         pass={colorAchieve.pass}

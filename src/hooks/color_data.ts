@@ -13,6 +13,7 @@ export type ColorDataType = {
   explain: string;
   code: string;
   category?: string;
+  munsell?: string;
 }
 
 /**

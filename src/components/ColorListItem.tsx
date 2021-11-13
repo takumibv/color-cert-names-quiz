@@ -9,7 +9,7 @@ interface ColorListItemProps extends HTMLAttributes<HTMLDivElement> {
   id: string;
   name: string;
   yomi: string;
-  code: string;
+  munsellCode?: string;
   explain: string;
   isHideColor?: boolean;
   isHideName?: boolean;
@@ -24,7 +24,7 @@ const ColorListItem = ({
   id,
   name,
   yomi,
-  code,
+  munsellCode = "",
   explain,
   isHideColor = false,
   isHideName = false,
@@ -48,7 +48,7 @@ const ColorListItem = ({
     setIsDisplayName(!isHideName);
   }, [isHideName])
 
-  const displayColor = isDisplayColor ? code : "transparent";
+  const displayColor = isDisplayColor ? munsell.munsellToHex(munsellCode) : "transparent";
 
   return (
     <div className={classNames("relative", className)} {...props}>
@@ -68,7 +68,7 @@ const ColorListItem = ({
         <div className={classNames("absolute right-0 top-0 rounded-bl-md rounded-tr-lg bg-white p-1", checked ? "" : "sm:opacity-0 group-hover:opacity-100")}>
           <span className="cursor-pointer hover:opacity-80" tabIndex={0} onClick={() => {
             onChecked && onChecked()
-            gtag.event({ action: "click", category: "bookmark", label: code, value: checked ? "0" : "1" })
+            gtag.event({ action: "click", category: "bookmark", label: munsellCode, value: checked ? "0" : "1" })
           }}>
             {checked
               ? <Bookmark className="text-red-500" />
@@ -79,7 +79,7 @@ const ColorListItem = ({
       <p className={classNames("font-bold mb-1", !isDisplayName && "opacity-0")}>{name}{yomi !== "" && `(${yomi})`}</p>
       <p className={classNames("text-gray-400 text-sm mb-1", !isDisplayColor && "opacity-0")}>{explain}</p>
       <div className="flow-root text-sm">
-        <p className={classNames("inline-block", !isDisplayColor && "opacity-0")}>{munsell.hexToMunsell(code)}</p>
+        <p className={classNames("inline-block", !isDisplayColor && "opacity-0")}>{munsellCode}</p>
         <p className="inline-block text-gray-500 float-right">正答率 {total === 0 ? 0 : Math.floor(100 * pass / total)}% ({pass}/{total})</p>
       </div>
     </div>
